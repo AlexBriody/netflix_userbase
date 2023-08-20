@@ -7,6 +7,20 @@ import tableauserverclient as TSC
 from io import StringIO
 
 
+# Set the path to the secrets.toml file
+secrets_path = os.path.join(os.pardir, os.pardir, ".streamlit", "secrets.toml")
+
+# Load the secrets
+st.secrets.load_config(secrets_path)
+
+# Set up connection to Tableau 
+tableau_auth = TSC.PersonalAccessTokenAuth(
+    st.secrets["tableau"]["toke_name"],
+    st.secrets["tableau"]["toke_secret"],
+    st.secrets["tableau"]["site_id"],
+)
+server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
+
 # Establish a filepath to the oracle_cards.csv file
 filepath = os.path.join(Path(__file__).parents[1], 'data/oracle_cards.csv')
 df = pd.read_csv(filepath, low_memory=False)
@@ -50,14 +64,7 @@ if type_vis == 'bar chart':
 # Create the Plotly bar chart
 fig = px.bar(df, x="country", y="monthly_revenue")
 
-# Set up connection to Tableau 
-tableau_auth = TSC.PersonalAccessTokenAuth(
-    st.secrets["tableau"]["toke_name"],
-    st.secrets["tableau"]["toke_secret"],
-    st.secrets["tableau"]["site_id"],
-)
-server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
-            
+          
 # Create a workbook and add the visualization to it
 try:
     with server.auth.sign_in(tableau_auth):
