@@ -5,13 +5,21 @@ from pathlib import Path
 import streamlit as st
 import tableauserverclient as TSC
 from io import StringIO
+import sys
 
 
 # Set the path to the secrets.toml file
-filepath = os.path.join(Path(__file__).parents[2], ".streamlit", "secrets.toml")
+filepath = os.path.join(Path(__file__).parents[2])
+print("This is the file path, babe: ", filepath)
+
+# Insert the filepath into the system:
+sys.path.insert(0, filepath)
 
 # Load the secrets
-st.secrets.load_config(filepath)
+try:
+    st.secrets.load_config(os.path.join(filepath, '.streamlit/secrets.toml'))
+except Exception as e:
+    st.error(f"Error loading secrets: {e}")
 
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
