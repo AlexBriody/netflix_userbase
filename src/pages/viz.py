@@ -10,14 +10,12 @@ from io import StringIO
 
 # Set the path to the secrets.toml file
 filepath = os.path.join(Path(__file__).parents[2])
-print("This is the file path, babe: ", filepath)
 
 # Load the secrets using dictionary-like access
 try:
     tableau_secrets = st.secrets[".streamlit"]["tableau"]
-except st.secrets.SecretsException:
+except KeyError:
     st.error("Error loading secrets. This thing sucks.")
-
 
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
