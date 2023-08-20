@@ -11,7 +11,7 @@ class Base:
 
 if __name__ == '__main__':
     c = Base()
-    c.clean_and_process_data('/Users/alexanderbriody/Desktop/Coding Temple/Data-Analytics-Projects/Week_6/netflix_user_database/netflix_userbase/netflix_database.csv')
+    c.clean_and_process_data('netflix_database.csv')
     
     if c.df is not None:
         c.df.to_csv('data/oracle_cards.csv', index=False)

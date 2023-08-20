@@ -15,7 +15,7 @@ sys.path.insert(0, filepath)
 from to_mongo import ToMongo
 
 # Instantiate the class:
-c = ToMongo(filepath='/Users/alexanderbriody/Desktop/Coding Temple/Data-Analytics-Projects/Week_6/netflix_user_database/netflix_userbase/netflix_database.csv')
+c = ToMongo(filepath='data/netflix_database.csv')
 
 # Streamlit UI:
 st.header('Query Page')
