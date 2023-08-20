@@ -1,3 +1,4 @@
 tableauserverclient==0.25
 
-urllib3>=1.26.8,<3
+urllib3==1.26.8
+
