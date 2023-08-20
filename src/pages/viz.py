@@ -52,11 +52,11 @@ fig = px.bar(df, x="country", y="monthly_revenue")
 
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
-    st.secrets["tableau"]["streamlit_netflix_pseudo_database"],
-    st.secrets["tableau"]["skl4n2YUQqu/jBV0Qvoo2g==:G2CVLdSwdApVZQgXM1IheI8DeT6A2t51"],
-    st.secrets["tableau"]["streamlit_write_page?:iid=1"],
+    st.secrets["tableau"]["toke_name"],
+    st.secrets["tableau"]["toke_secret"],
+    st.secrets["tableau"]["site_id"],
 )
-server = TSC.Server(st.secrets["tableau"]["https://abc01.online.tableau.com/"], use_server_version=True)
+server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
             
 # Create a workbook and add the visualization to it
 try:
