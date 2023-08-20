@@ -69,4 +69,5 @@ tzlocal==4.3.1
 urllib3==1.26.16
 validators==0.21.2
 wasabi==1.1.2
+watchdog==3.0.0
 zipp==3.16.2
