@@ -14,8 +14,12 @@ sys.path.insert(0, filepath)
 # Import the ToMongo Class now:
 from to_mongo import ToMongo
 
+# Use absolute path
+data_file_relative_path = 'data/netflix_database.csv'
+data_file_absolute_path = os.path.abspath(os.path.join(filepath, data_file_relative_path))
+
 # Instantiate the class:
-c = ToMongo(filepath='data/netflix_database.csv')
+c = ToMongo(filepath=data_file_absolute_path)
 
 # Streamlit UI:
 st.header('Query Page')
