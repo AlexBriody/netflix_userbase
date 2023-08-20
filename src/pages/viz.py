@@ -11,23 +11,14 @@ from io import StringIO
 filepath = os.path.join(Path(__file__).parents[1], 'data/oracle_cards.csv')
 df = pd.read_csv(filepath, low_memory=False)
 
-# Establish a filepath to the secrets.toml file
-filepath_secrets = os.path.join(Path(__file__).parents[1], '.streamlit/secrets.toml')
-
-# Load the secrets using dictionary-like access
-try:
-    secrets = st.secrets.load_config_file(filepath_secrets)
-    tableau_secrets = secrets["tableau"]
-except KeyError:
-    st.error("Error loading secrets. Check your secrets.toml configuration.")
-
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
-    tableau_secrets["token_name"],
-    tableau_secrets["token_secret"],
-    tableau_secrets["site_id"],
+    st.secrets["tableau"]["token_name"],
+    st.secrets["tableau"]["token_secret"],
+    st.secrets["tableau"]["site_id"]
 )
 server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
+
 
 # Take in a user input:
 vis_to_use = ['scatterplot', 'histogram', 'bar chart']
