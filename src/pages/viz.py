@@ -9,11 +9,11 @@ from io import StringIO
 
 
 # Set the path to the secrets.toml file
-filepath = os.path.join(Path(__file__).parents[2])
+filepath = Path(__file__).resolve().parents[3] / ".streamlit" / "secrets.toml"
 
 # Load the secrets using dictionary-like access
 try:
-    tableau_secrets = st.secrets[".streamlit"]["tableau"]
+    tableau_secrets = st.secrets["tableau"]
 except KeyError:
     st.error("Error loading secrets. This thing sucks.")
 
