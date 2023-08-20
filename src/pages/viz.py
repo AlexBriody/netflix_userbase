@@ -9,7 +9,7 @@ from io import StringIO
 
 
 # Set the path to the secrets.toml file
-filepath = Path(__file__).resolve().parents[1] / ".streamlit" / "secrets.toml"
+filepath = Path(__file__) / ".streamlit" / "secrets.toml"
 
 # Load the secrets using dictionary-like access
 try:
