@@ -5,8 +5,6 @@ from pathlib import Path
 import streamlit as st
 import tableauserverclient as TSC
 from io import StringIO
-import toml
-
 
 
 # Establish a filepath to the oracle_cards.csv file
@@ -16,20 +14,18 @@ df = pd.read_csv(filepath, low_memory=False)
 # Establish a filepath to the secrets.toml file
 filepath_secrets = os.path.join(Path(__file__).parents[1], '.streamlit/secrets.toml')
 
-with open(filepath_secrets) as f:
-    secrets = toml.load(f)
-
-    # Load the secrets using dictionary-like access
-    try:
-        tableau_secrets = st.secrets["tableau"]
-    except KeyError:
-        st.error("Error loading secrets. This thing sucks.")
+# Load the secrets using dictionary-like access
+try:
+    secrets = st.secrets.load_config_file(filepath_secrets)
+    tableau_secrets = secrets["tableau"]
+except KeyError:
+    st.error("Error loading secrets. Check your secrets.toml configuration.")
 
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
-    st.secrets["tableau"]["token_name"],
-    st.secrets["tableau"]["token_secret"],
-    st.secrets["tableau"]["site_id"],
+    tableau_secrets["token_name"],
+    tableau_secrets["token_secret"],
+    tableau_secrets["site_id"],
 )
 server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
 
