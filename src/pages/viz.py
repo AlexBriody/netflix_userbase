@@ -46,35 +46,28 @@ if type_vis == 'bar chart':
         except BaseException:
             print("Error visualizing this column")
 
-if type_vis == 'bar chart':
-    # Get the columns for the bar chart
-    answer_bar_x = st.selectbox('Select a Column for the X-axis:', options=sorted(list(df.columns)))
-    answer_bar_y = st.selectbox('Select a Column for the Y-axis:', options=sorted(list(df.columns)))
-    
-    if answer_bar_x and answer_bar_y:
-        try:
-            # Create the Plotly bar chart
-            fig = px.bar(df, x=answer_bar_x, y=answer_bar_y)
-            st.plotly_chart(fig, use_container_width=True)
-            
-            # Set up connection to Tableau (replace with actual values)
-            tableau_auth = TSC.PersonalAccessTokenAuth(
-                st.secrets["tableau"]["token_name"],
-                st.secrets["tableau"]["token_secret"],
-                st.secrets["tableau"]["site_id"],
-            )
-            server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
-            
-            # Create a workbook and add the visualization to it
-            with server.auth.sign_in(tableau_auth):
-                workbook = TSC.WorkbookItem(name='Streamlit Bar Chart')
-                workbook = server.workbooks.publish(workbook, project_id='your_project_id')  # Replace with your project_id
+          
+# Create the Plotly bar chart
+fig = px.bar(df, x="country", y="monthly_revenue")
 
-                view_item = TSC.ViewItem(workbook.id)
-                server.views.populate_csv(view_item, content=fig.to_csv(index=False))
-                server.views.populate_image(view_item, content=fig.to_image(format='png'))
-
-            st.success("Bar chart visualization has been published to Tableau!")
+# Set up connection to Tableau 
+tableau_auth = TSC.PersonalAccessTokenAuth(
+    st.secrets["tableau"]["streamlit_netflix_pseudo_database"],
+    st.secrets["tableau"]["skl4n2YUQqu/jBV0Qvoo2g==:G2CVLdSwdApVZQgXM1IheI8DeT6A2t51"],
+    st.secrets["tableau"]["streamlit_write_page?:iid=1"],
+)
+server = TSC.Server(st.secrets["tableau"]["https://abc01.online.tableau.com/"], use_server_version=True)
             
-        except BaseException:
-            print("Error visualizing this column")
+# Create a workbook and add the visualization to it
+try:
+    with server.auth.sign_in(tableau_auth):
+        workbook = TSC.WorkbookItem(name='Streamlit Bar Chart')
+        workbook = server.workbooks.publish(workbook)
+
+        view_item = TSC.ViewItem(workbook.id)
+        server.views.populate_image(view_item, content=fig.to_image(format='png'))
+
+    st.success("Bar chart visualization has been published to Tableau!")
+
+except BaseException as e:
+    st.error("Error:", e)
