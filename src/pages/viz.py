@@ -19,11 +19,12 @@ except KeyError:
 
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
-    st.secrets["tableau"]["toke_name"],
-    st.secrets["tableau"]["toke_secret"],
+    st.secrets["tableau"]["token_name"],
+    st.secrets["tableau"]["token_secret"],
     st.secrets["tableau"]["site_id"],
 )
 server = TSC.Server(st.secrets["tableau"]["server_url"], use_server_version=True)
+
 
 # Take in a user input:
 vis_to_use = ['scatterplot', 'histogram', 'bar chart']
