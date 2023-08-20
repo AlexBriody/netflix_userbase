@@ -10,9 +10,6 @@ from io import StringIO
 # Set the path to the secrets.toml file
 secrets_path = os.path.join(os.pardir, os.pardir, ".streamlit", "secrets.toml")
 
-# Load the secrets
-st.secrets.load_config(secrets_path)
-
 # Set up connection to Tableau 
 tableau_auth = TSC.PersonalAccessTokenAuth(
     st.secrets["tableau"]["toke_name"],
