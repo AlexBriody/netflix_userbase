@@ -74,7 +74,7 @@ fig.write_html(html_path)
 
 # # Set up connection to Tableau Server
 # tableau_server_url = 'https://prod-useast-b.online.tableau.com/#/site/alexbriody/views/streamlit_write_page/streamlit_write_page?:iid=7'
-# auth = TSC.TableauAuth('alexbriody@gmail.com', 'Jiachi67!')  
+# auth = TSC.TableauAuth('alexbriody@gmail.com', 'PASSWORD')  
 
 # # Connect to the server
 # with server.auth.sign_in(auth):
